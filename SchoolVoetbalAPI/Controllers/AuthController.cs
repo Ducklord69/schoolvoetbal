@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using SchoolVoetbalAPI.Data;
 using SchoolVoetbalAPI.Models;
@@ -39,10 +40,12 @@ namespace LoginRegisterAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly PasswordHasher<User> _passwordHasher;
 
         public AuthController(ApplicationDbContext context)
         {
             _context = context;
+            _passwordHasher = new PasswordHasher<User>();
         }
 
         [HttpPost("register")]
@@ -57,7 +60,7 @@ namespace LoginRegisterAPI.Controllers
             var user = new User
             {
                 username = request.Username,
-                password = request.Password,
+                password = _passwordHasher.HashPassword(null, request.Password),
                 email = request.Email 
             };
 
@@ -70,13 +73,24 @@ namespace LoginRegisterAPI.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
-            var user = _context.Users.FirstOrDefault(u =>
-                (u.username == request.UsernameOrEmail || u.email == request.UsernameOrEmail) &&
-                u.password == request.Password);
+            var user = _context.Users.FirstOrDefault(u => u.username == request.UsernameOrEmail);
 
             if (user == null)
             {
-                return Unauthorized(new { message = "Invalid username/email or password." });
+                user = _context.Users.FirstOrDefault(u => u.email == request.UsernameOrEmail);
+
+                if (user == null)
+                {
+                    return Unauthorized(new { message = "Invalid username or password." });
+                }
+            }
+
+
+            var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(user, user.password, request.Password);
+
+            if (passwordVerificationResult == PasswordVerificationResult.Failed)
+            {
+                return Unauthorized(new { message = "Invalid username or password." });
             }
 
             return Ok(new { message = "Login successful." });
