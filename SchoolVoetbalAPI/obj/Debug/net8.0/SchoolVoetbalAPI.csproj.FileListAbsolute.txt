@@ -102,3 +102,4 @@ D:\School Blok C\PRA\Schoolvoetbal C3\SchoolVoetbalAPI\SchoolVoetbalAPI\bin\Debu
 D:\School Blok C\PRA\Schoolvoetbal C3\SchoolVoetbalAPI\SchoolVoetbalAPI\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\School Blok C\PRA\Schoolvoetbal C3\SchoolVoetbalAPI\SchoolVoetbalAPI\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\School Blok C\PRA\Schoolvoetbal C3\SchoolVoetbalAPI\SchoolVoetbalAPI\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\School Blok C\PRA\Schoolvoetbal C3\SchoolVoetbalAPI\SchoolVoetbalAPI\bin\Debug\net8.0\System.Security.Permissions.dll
