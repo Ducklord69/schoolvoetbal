@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+    --backgroundcolor: #ffffff; /* Default light mode */
+}
+
+.dark {
+    --backgroundcolor: #1a202c; /* Dark mode background */
+}
